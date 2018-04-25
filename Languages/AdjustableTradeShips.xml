@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Mod name in the Settings tab -->
+  <AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
+
+  <!-- Buttons -->
+  <AdjustableTradeShips.Apply>Übernehmen</AdjustableTradeShips.Apply>
+  <AdjustableTradeShips.Default>Standard</AdjustableTradeShips.Default>
+
+  <!-- Labels on the Settings page -->
+  <AdjustableTradeShips.SetMTBOT>Stelle die Zeit zwischen Handelsschiffen ein (in Tagen)</AdjustableTradeShips.SetMTBOT>
+  <AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
+  <AdjustableTradeShips.CurrentGame>Derzeitiges Spiel</AdjustableTradeShips.CurrentGame>
+
+</LanguageData>
