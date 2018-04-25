@@ -8,7 +8,7 @@
 	<AdjustableTradeShips.Default>Default</AdjustableTradeShips.Default>
 	
 	<!-- Labels on the Settings page -->
-	<AdjustableTradeShips.SetMTBOT>Set the Mean Time Between Trade Ships</AdjustableTradeShips.SetMTBOT>
+	<AdjustableTradeShips.SetMTBOT>Set the "Mean Time" (in days) between trade ships</AdjustableTradeShips.SetMTBOT>
 	<AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
 	<AdjustableTradeShips.CurrentGame>Current Game</AdjustableTradeShips.CurrentGame>
 </LanguageData>
