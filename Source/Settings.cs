@@ -24,10 +24,16 @@ namespace AdjustableTradeShips
 
     public class Settings : ModSettings
     {
-        private const float DEFAULT_MTBOT = 12f;
+        public const float DEFAULT_MTBOT = 12f;
+        public const float DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS = 5;
+        public const float DEFAULT_MTB_ALLY_INTERACTIONS = 6;
+
         private static float globalMTBOT = DEFAULT_MTBOT;
         private static string inputGlobalMTBOT = globalMTBOT.ToString();
         public static string InputGameMTBOT = globalMTBOT.ToString();
+
+        public static string InputMinDaysBetweenAllyInteraction = DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS.ToString();
+        public static string InputMTBAllyInteractions = DEFAULT_MTB_ALLY_INTERACTIONS.ToString();
 
         public override void ExposeData()
         {
@@ -37,39 +43,77 @@ namespace AdjustableTradeShips
 
         public static void DoSettingsWindowContents(Rect rect)
         {
-            GUI.BeginGroup(new Rect(0, 60, 600, 200));
+            GUI.BeginGroup(new Rect(0, 60, 600, 400));
             Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(0, 0, 600, 40), "AdjustableTradeShips.SetMTBOT".Translate());
+            int y = 0;
+            Widgets.Label(new Rect(0, y, 600, 40), "AdjustableTradeShips.SetMTBOT".Translate());
+            y += 40;
 
             // Global
-            Widgets.Label(new Rect(0, 40, 200, 20), "AdjustableTradeShips.Global".Translate() + ":");
-            inputGlobalMTBOT = Widgets.TextField(new Rect(220, 40, 100, 20), inputGlobalMTBOT);
-            if (Widgets.ButtonText(new Rect(220, 65, 100, 20), "AdjustableTradeShips.Apply".Translate()))
+            Widgets.Label(new Rect(0, y, 200, 20), "AdjustableTradeShips.Global".Translate() + ":");
+            inputGlobalMTBOT = Widgets.TextField(new Rect(220, y, 100, 20), inputGlobalMTBOT);
+            if (Widgets.ButtonText(new Rect(340, y, 100, 20), "AdjustableTradeShips.Default".Translate()))
+            {
+                inputGlobalMTBOT = DEFAULT_MTBOT.ToString();
+            }
+            y += 25;
+            if (Widgets.ButtonText(new Rect(220, y, 100, 20), "AdjustableTradeShips.Apply".Translate()))
             {
                 if (Validate(ref inputGlobalMTBOT))
                 {
                     globalMTBOT = float.Parse(inputGlobalMTBOT);
                 }
             }
-            if (Widgets.ButtonText(new Rect(340, 65, 100, 20), "AdjustableTradeShips.Default".Translate()))
-            {
-                inputGlobalMTBOT = DEFAULT_MTBOT.ToString();
-            }
+            y += 40;
 
             // Current Game
             if (Current.Game != null)
             {
-                Widgets.Label(new Rect(0, 90, 200, 20), "AdjustableTradeShips.CurrentGame".Translate() + ":");
-                InputGameMTBOT = Widgets.TextField(new Rect(220, 90, 100, 20), InputGameMTBOT);
-                if (Widgets.ButtonText(new Rect(220, 115, 100, 20), "AdjustableTradeShips.Apply".Translate()))
-                {
-                    ApplyMTBOT();
-                }
-                if (Widgets.ButtonText(new Rect(340, 115, 100, 20), "AdjustableTradeShips.Default".Translate()))
+                Widgets.DrawLineHorizontal(0, y, 400);
+                y += 20;
+
+                Widgets.Label(new Rect(0, y, 200, 20), "AdjustableTradeShips.CurrentGame".Translate() + ":");
+                InputGameMTBOT = Widgets.TextField(new Rect(220, y, 100, 20), InputGameMTBOT);
+                if (Widgets.ButtonText(new Rect(340, y, 100, 20), "AdjustableTradeShips.Default".Translate()))
                 {
                     InputGameMTBOT = DEFAULT_MTBOT.ToString();
                 }
+
+                bool hasAllyInteraction = HasAllyInteraction();
+                if (hasAllyInteraction)
+                {
+                    y += 40;
+                    Text.Font = GameFont.Medium;
+                    Widgets.Label(new Rect(0, y, 200, 30), "AdjustableTradeShips.AllyInteractions".Translate());
+                    Text.Font = GameFont.Small;
+                    y += 25;
+                    Widgets.Label(new Rect(0, y, 200, 20), "AdjustableTradeShips.MinDaysBetween".Translate());
+                    InputMinDaysBetweenAllyInteraction = Widgets.TextField(new Rect(220, y, 100, 20), InputMinDaysBetweenAllyInteraction);
+                    if (Widgets.ButtonText(new Rect(340, y, 100, 20), "AdjustableTradeShips.Default".Translate()))
+                    {
+                        InputMinDaysBetweenAllyInteraction = DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS.ToString();
+                    }
+                    y += 25;
+
+                    Widgets.Label(new Rect(0, y, 200, 20), "AdjustableTradeShips.AverageDaysBetween".Translate());
+                    InputMTBAllyInteractions = Widgets.TextField(new Rect(220, y, 100, 20), InputMTBAllyInteractions);
+                    if (Widgets.ButtonText(new Rect(340, y, 100, 20), "AdjustableTradeShips.Default".Translate()))
+                    {
+                        InputMTBAllyInteractions = DEFAULT_MTB_ALLY_INTERACTIONS.ToString();
+                    }
+                }
+
+                y += 25;
+                if (Widgets.ButtonText(new Rect(220, y, 100, 20), "AdjustableTradeShips.Apply".Translate()))
+                {
+                    ApplyMTBOT();
+                    if (hasAllyInteraction)
+                    {
+                        ApplyAllyInteraction();
+                    }
+                }
             }
+            GUI.EndGroup();
         }
 
         public static void NewGame()
@@ -94,6 +138,51 @@ namespace AdjustableTradeShips
                             if (mtb != null && mtb.incident.defName.EqualsIgnoreCase("OrbitalTraderArrival"))
                             {
                                 mtb.mtbDays = mtbot;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static bool HasAllyInteraction()
+        {
+            if (Current.Game != null && Current.Game.storyteller != null)
+            {
+                StorytellerDef d = Current.Game.storyteller.def;
+                foreach (StorytellerCompProperties c in d.comps)
+                {
+                    if (c is StorytellerCompProperties_AllyInteraction)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static void ApplyAllyInteraction()
+        {
+            if (Validate(ref InputMinDaysBetweenAllyInteraction) &&
+                Validate(ref InputMTBAllyInteractions))
+            {
+                float mtbot = float.Parse(InputGameMTBOT);
+
+                float minDaysAllyInteractions = float.Parse(InputMinDaysBetweenAllyInteraction);
+                float mtbAllyInteractions = float.Parse(InputMTBAllyInteractions);
+
+                if (Current.Game != null && Current.Game.storyteller != null)
+                {
+                    StorytellerDef d = Current.Game.storyteller.def;
+                    foreach (StorytellerCompProperties c in d.comps)
+                    {
+                        if (c is StorytellerCompProperties_AllyInteraction)
+                        {
+                            StorytellerCompProperties_AllyInteraction ai = c as StorytellerCompProperties_AllyInteraction;
+                            if (ai != null)
+                            {
+                                ai.minDaysPassed = minDaysAllyInteractions;
+                                ai.baseMtb = mtbAllyInteractions;
                             }
                         }
                     }
