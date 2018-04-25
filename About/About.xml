@@ -4,5 +4,8 @@
 <author>Kiame Vivacity</author>
 <url>https://ludeon.com/forums/index.php?topic=41309.0</url>
 <targetVersion>0.18.0</targetVersion>
-<description>Set the frequency of trade ships in settings on the fly. Set a global value and a game-specific value.</description>
+<description>Set the frequency of trade ships in settings on the fly. Set a global value and a game-specific value.
+
+Translators:
+XNoNameX - German</description>
 </ModMetaData>
