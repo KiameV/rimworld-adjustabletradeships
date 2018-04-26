@@ -11,5 +11,7 @@
   <AdjustableTradeShips.SetMTBOT>Stelle die Zeit zwischen Handelsschiffen ein (in Tagen)</AdjustableTradeShips.SetMTBOT>
   <AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
   <AdjustableTradeShips.CurrentGame>Derzeitiges Spiel</AdjustableTradeShips.CurrentGame>
-
+	<AdjustableTradeShips.AllyInteractions>Verbündete Interaktion</AdjustableTradeShips.AllyInteractions>
+	<AdjustableTradeShips.MinDaysBetween>Mind. Tage zwischen</AdjustableTradeShips.MinDaysBetween>
+	<AdjustableTradeShips.AverageDaysBetween>Durchschn. Tage zwischen</AdjustableTradeShips.AverageDaysBetween>
 </LanguageData>
