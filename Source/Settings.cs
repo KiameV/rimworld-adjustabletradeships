@@ -63,6 +63,7 @@ namespace AdjustableTradeShips
                 {
                     globalMTBOT = float.Parse(inputGlobalMTBOT);
                 }
+                Messages.Message("AdjustableTradeShips.SettingsApplied".Translate(), MessageTypeDefOf.PositiveEvent);
             }
             y += 40;
 
@@ -111,6 +112,7 @@ namespace AdjustableTradeShips
                     {
                         ApplyAllyInteraction();
                     }
+                    Messages.Message("AdjustableTradeShips.SettingsApplied".Translate(), MessageTypeDefOf.PositiveEvent);
                 }
             }
             GUI.EndGroup();

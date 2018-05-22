@@ -14,4 +14,7 @@
 	<AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
 	<AdjustableTradeShips.MinDaysBetween>Min Days Between</AdjustableTradeShips.MinDaysBetween>
 	<AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>
+	
+	<!-- Message when settings applied -->
+	<AdjustableTradeShips.SettingsApplied>Adjustable Trade Ships Settings Applied</AdjustableTradeShips.SettingsApplied>
 </LanguageData>
