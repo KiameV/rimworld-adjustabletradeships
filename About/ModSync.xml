@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ModSyncNinjaData>
-	<ID>193b27c2-368d-4c4f-b027-5ee894f9da3a</ID>
-	<ModName>Adjustable Trade Ships</ModName>
-	<Version>0.18.1.2</Version>
-	<SaveBreaking>false</SaveBreaking>
+  <ID>193b27c2-368d-4c4f-b027-5ee894f9da3a</ID>
+  <ModName>Adjustable Trade Ships</ModName>
+  <Version>0.18.1.2</Version>
+  <SaveBreaking>False</SaveBreaking>
+  <Host name="Github">
+    <Owner>KiameV</Owner>
+    <Project>rimworld-adjustabletradeships</Project>
+    <DownloadFrom>ModSyncReleases</DownloadFrom>
+    <Branch>master</Branch>
+  </Host>
 </ModSyncNinjaData>
