@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-<name>[KV] Adjustable Trade Ships - B18</name>
+<name>[KV] Adjustable Trade Ships - 1.0</name>
 <author>Kiame Vivacity</author>
 <url>https://ludeon.com/forums/index.php?topic=41309.0</url>
-<targetVersion>0.18.0</targetVersion>
+<targetVersion>1.0.0</targetVersion>
 <description>Set the frequency of trade ships in settings on the fly. Set a global value and a game-specific value.
 
 Translators:

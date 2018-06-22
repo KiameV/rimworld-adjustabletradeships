@@ -154,7 +154,7 @@ namespace AdjustableTradeShips
                 StorytellerDef d = Current.Game.storyteller.def;
                 foreach (StorytellerCompProperties c in d.comps)
                 {
-                    if (c is StorytellerCompProperties_AllyInteraction)
+                    if (c is StorytellerCompProperties_FactionInteraction)
                     {
                         return true;
                     }
@@ -178,14 +178,11 @@ namespace AdjustableTradeShips
                     StorytellerDef d = Current.Game.storyteller.def;
                     foreach (StorytellerCompProperties c in d.comps)
                     {
-                        if (c is StorytellerCompProperties_AllyInteraction)
+                        StorytellerCompProperties_FactionInteraction fi = c as StorytellerCompProperties_FactionInteraction;
+                        if (fi != null)
                         {
-                            StorytellerCompProperties_AllyInteraction ai = c as StorytellerCompProperties_AllyInteraction;
-                            if (ai != null)
-                            {
-                                ai.minDaysPassed = minDaysAllyInteractions;
-                                ai.baseMtb = mtbAllyInteractions;
-                            }
+                            fi.minDaysPassed = minDaysAllyInteractions;
+                            fi.baseMtbDays = mtbAllyInteractions;
                         }
                     }
                 }
