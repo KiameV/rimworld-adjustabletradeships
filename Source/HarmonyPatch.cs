@@ -24,7 +24,11 @@ namespace AdjustableTradeShips
 #if DEBUG
             Log.Warning("Patch_Game_InitNewGame Postfix");
 #endif
-            WorldComp.InitializeNewGame();
+            if (StoryTellerUtil.HasOrbitalTraders())
+            {
+                Settings.GameMTBOT = Settings.GlobalMTBOT;
+                StoryTellerUtil.ApplyMTBOT(Settings.GameMTBOT);
+            }
         }
     }
 }

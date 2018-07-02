@@ -4,7 +4,6 @@
 	<AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
 	
 	<!-- Buttons -->
-	<AdjustableTradeShips.Apply>Apply</AdjustableTradeShips.Apply>
 	<AdjustableTradeShips.Default>Default</AdjustableTradeShips.Default>
 	
 	<!-- Labels on the Settings page -->
@@ -14,7 +13,6 @@
 	<AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
 	<AdjustableTradeShips.MinDaysBetween>Min Days Between</AdjustableTradeShips.MinDaysBetween>
 	<AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>
-	
-	<!-- Message when settings applied -->
-	<AdjustableTradeShips.SettingsApplied>Adjustable Trade Ships Settings Applied</AdjustableTradeShips.SettingsApplied>
+	<AdjustableTradeShips.CannotModifyOrbitalTraderTimes>Cannot Modify Orbital Traders Times</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
+	<AdjustableTradeShips.CannotModifyAllyInteractionTimes>Cannot Modify Ally Interaction Times</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
 </LanguageData>

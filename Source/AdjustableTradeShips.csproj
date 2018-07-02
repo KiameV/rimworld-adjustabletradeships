@@ -55,6 +55,7 @@
     <Compile Include="HarmonyPatch.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryTellerUtil.cs" />
     <Compile Include="WorldComp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

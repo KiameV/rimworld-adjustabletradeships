@@ -14,24 +14,36 @@ namespace AdjustableTradeShips
 #if DEBUG
             Log.Warning("WorldComp.InitializeNewGame");
 #endif
-            Settings.NewGame();
+            if (StoryTellerUtil.HasOrbitalTraders())
+            {
+                Settings.GameMTBOT = Settings.GlobalMTBOT;
+                StoryTellerUtil.ApplyMTBOT(Settings.GameMTBOT);
+            }
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-            Scribe_Values.Look<string>(ref Settings.InputGameMTBOT, "AdjustableTradeShips.MTBOT", Settings.DEFAULT_MTBOT.ToString());
-            Scribe_Values.Look<string>(ref Settings.InputMTBAllyInteractions, "AdjustableTradeShips.MTBAlly", Settings.DEFAULT_MTB_ALLY_INTERACTIONS.ToString());
-            Scribe_Values.Look<string>(ref Settings.InputMinDaysBetweenAllyInteraction, "AdjustableTradeShips.MinDaysAlly", Settings.DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS.ToString());
+            float gameMtbot = Settings.GameMTBOT;
+            float mtbAllyInteractions = Settings.MtbAllyInteractions;
+            float minDaysBetweenAllyInteractions = Settings.MinDaysBetweenAllyInteraction;
+
+            Scribe_Values.Look<float>(ref gameMtbot, "AdjustableTradeShips.MTBOT", Settings.DEFAULT_MTBOT);
+            Scribe_Values.Look<float>(ref mtbAllyInteractions, "AdjustableTradeShips.MTBAlly", Settings.DEFAULT_MTB_ALLY_INTERACTIONS);
+            Scribe_Values.Look<float>(ref minDaysBetweenAllyInteractions, "AdjustableTradeShips.MinDaysAlly", Settings.DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS);
+
+            Settings.GameMTBOT = gameMtbot;
+            Settings.MtbAllyInteractions = mtbAllyInteractions;
+            Settings.MinDaysBetweenAllyInteraction = minDaysBetweenAllyInteractions;
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
 #if DEBUG
                 Log.Warning(Scribe.mode + " Apply MTBOT");
 #endif
-                Settings.ApplyMTBOT();
-                Settings.ApplyAllyInteraction();
+                StoryTellerUtil.ApplyMTBOT(gameMtbot);
+                StoryTellerUtil.ApplyAllyInteraction(minDaysBetweenAllyInteractions, mtbAllyInteractions);
             }
         }
     }
