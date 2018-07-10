@@ -15,4 +15,6 @@
 	<AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>
 	<AdjustableTradeShips.CannotModifyOrbitalTraderTimes>Cannot Modify Orbital Traders Times</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
 	<AdjustableTradeShips.CannotModifyAllyInteractionTimes>Cannot Modify Ally Interaction Times</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
+	<AdjustableTradeShips.EnableOrbitalTraders>Enable Orbital Traders (beta)</AdjustableTradeShips.EnableOrbitalTraders>
+	<AdjustableTradeShips.EnableAllyInteractions>Enable Orbital Traders (beta)</AdjustableTradeShips.EnableAllyInteractions>
 </LanguageData>

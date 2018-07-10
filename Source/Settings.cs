@@ -62,6 +62,9 @@ namespace AdjustableTradeShips
             set { mtbAllyInteractions = value; mtbAllyInteractionsString = value.ToString(); }
         }
 
+        public static bool EnableOrbitalTraders = false;
+        public static bool EnableAllyInteractions = false;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -102,7 +105,37 @@ namespace AdjustableTradeShips
                 {
                     Widgets.Label(new Rect(0, y, 300, 20), Current.Game.storyteller.def.label + ": " + "AdjustableTradeShips.CannotModifyOrbitalTraderTimes".Translate());
                 }
-                y += 25;
+
+                if (!StoryTellerUtil.HasOrbitalTraders() || 
+                    StoryTellerUtil.ModifiedOrbitalTrader == Current.Game.storyteller.def)
+                {
+                    y += 25;
+                    bool orig = EnableOrbitalTraders;
+                    Widgets.CheckboxLabeled(new Rect(0, y, 100, 22), "AdjustableTradeShips.EnableOrbitalTraders", ref EnableOrbitalTraders);
+                    if (orig != EnableOrbitalTraders)
+                    {
+                        if (EnableOrbitalTraders)
+                            StoryTellerUtil.AddOrbitalTraders();
+                        else
+                            StoryTellerUtil.RemoveOrbitalTraders();
+                    }
+                }
+
+                if (!StoryTellerUtil.HasAllyInteraction() ||
+                    StoryTellerUtil.ModifiedAllyInteractions == Current.Game.storyteller.def)
+                {
+                    y += 25;
+                    bool orig = EnableAllyInteractions;
+                    Widgets.CheckboxLabeled(new Rect(0, y, 100, 22), "AdjustableTradeShips.EnableAllyInteractions", ref EnableAllyInteractions);
+                    if (orig != EnableAllyInteractions)
+                    {
+                        if (EnableAllyInteractions)
+                            StoryTellerUtil.AddAllyInteraction();
+                        else
+                            StoryTellerUtil.RemoveAllyInteraction();
+                    }
+                }
+                y += 40;
 
                 bool hasAllyInteraction = StoryTellerUtil.HasAllyInteraction();
                 if (hasAllyInteraction)
