@@ -128,8 +128,8 @@ namespace AdjustableTradeShips
         {
             if (ModifiedOrbitalTrader != null)
             {
-                StorytellerDef d = ModifiedAllyInteractions;
-                ModifiedAllyInteractions = null;
+                StorytellerDef d = ModifiedOrbitalTrader;
+                ModifiedOrbitalTrader = null;
                 for (int i = 0; i < d.comps.Count; ++i)
                 {
                     StorytellerCompProperties_SingleMTB comp = d.comps[i] as StorytellerCompProperties_SingleMTB;
@@ -142,7 +142,7 @@ namespace AdjustableTradeShips
                     }
                 }
             }
-            Log.Warning("Not remove Orbital Traders");
+            Log.Warning("Not removing Orbital Traders");
         }
 
         public static void RemoveAllyInteraction()
@@ -162,7 +162,7 @@ namespace AdjustableTradeShips
                     }
                 }
             }
-            Log.Warning("Not remove Ally Interactions");
+            Log.Warning("Not removing Ally Interactions");
         }
     }
 }
