@@ -82,6 +82,18 @@ namespace AdjustableTradeShips
                 StoryTellerDefaultsUtil.defaultDefaults.TryGetIncident(IncidentDefOf.OrbitalTraderArrival, out GlobalOrbitalTrade);
             }
 
+            if (GameOrbitalTrade == null && StoryTellerUtil.HasOrbitalTraders())
+            {
+                GameOrbitalTrade = new OnOffIncident
+                {
+                    Incident = GlobalOrbitalTrade.Incident,
+                    OnDays = GlobalOrbitalTrade.OnDays,
+                    OffDays = GlobalOrbitalTrade.OffDays,
+                    MinInstances = GlobalOrbitalTrade.MinInstances,
+                    MaxInstances = GlobalOrbitalTrade.MaxInstances,
+                };
+            }
+
 
             // Draw Contents
             // Global

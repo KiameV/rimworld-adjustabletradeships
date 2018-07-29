@@ -32,12 +32,6 @@ namespace AdjustableTradeShips
             }
         }
 
-        public override void FinalizeInit()
-        {
-            base.FinalizeInit();
-            WorldComp.Initialize();
-        }
-
         public override void ExposeData()
         {
             base.ExposeData();
@@ -48,11 +42,18 @@ namespace AdjustableTradeShips
 
             Settings.GameOrbitalTrade = gameOT;
 
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && Settings.GameOrbitalTrade != null)
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                StoryTellerUtil.ApplyOrbitalTrade(
-                    Settings.GameOrbitalTrade.OnDays, Settings.GameOrbitalTrade.OffDays,
-                    Settings.GameOrbitalTrade.MinInstances, Settings.GameOrbitalTrade.MaxInstances);
+                if (Settings.GameOrbitalTrade == null)
+                {
+                    Initialize();
+                }
+                else
+                {
+                    StoryTellerUtil.ApplyOrbitalTrade(
+                        Settings.GameOrbitalTrade.OnDays, Settings.GameOrbitalTrade.OffDays,
+                        Settings.GameOrbitalTrade.MinInstances, Settings.GameOrbitalTrade.MaxInstances);
+                }
             }
         }
     }
