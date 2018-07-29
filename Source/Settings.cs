@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using System;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -24,86 +25,140 @@ namespace AdjustableTradeShips
 
     public class Settings : ModSettings
     {
-        public const float DEFAULT_MTBOT = 12f;
-        public const float DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS = 5f;
-        public const float DEFAULT_MTB_ALLY_INTERACTIONS = 6f;
-        private const float MIN_VALUE = 0.0001f;
+        private const float MIN_ONOFF_VALUE = 0.01f;
+
+        private const float MIN_VALUE = 0.01f;
         private const float MAX_VALUE = 1000f;
 
-        private static float globalMTBOT = DEFAULT_MTBOT;
-        private static string globalMTBOTString = DEFAULT_MTBOT.ToString();
-        public static float GlobalMTBOT
-        {
-            get { return globalMTBOT; }
-            set { globalMTBOT = value; globalMTBOTString = value.ToString(); }
-        }
 
-        private static float gameMTBOT = DEFAULT_MTBOT;
-        private static string gameMTBOTString = DEFAULT_MTBOT.ToString();
-        public static float GameMTBOT
+        private enum Tabs
         {
-            get { return gameMTBOT; }
-            set { gameMTBOT = value; gameMTBOTString = value.ToString(); }
-        }
+            ATS_Game,
+            ATS_Global
+        };
 
-        private static float minDaysBetweenAllyInteraction = DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS;
-        private static string minDaysBetweenAllyInteractionString = DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS.ToString();
-        public static float MinDaysBetweenAllyInteraction
-        {
-            get { return minDaysBetweenAllyInteraction; }
-            set { minDaysBetweenAllyInteraction = value; minDaysBetweenAllyInteractionString = value.ToString(); }
-        }
-
-        private static float mtbAllyInteractions = DEFAULT_MTB_ALLY_INTERACTIONS;
-        private static string mtbAllyInteractionsString = DEFAULT_MTB_ALLY_INTERACTIONS.ToString();
-        public static float MtbAllyInteractions
-        {
-            get { return mtbAllyInteractions; }
-            set { mtbAllyInteractions = value; mtbAllyInteractionsString = value.ToString(); }
-        }
+        public static OnOffIncident GlobalOrbitalTrade = null;
+        public static OnOffIncident GameOrbitalTrade = null;
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<float>(ref globalMTBOT, "AdjustableTradeShips.GlobalMTBOT", DEFAULT_MTBOT, false);
-            GlobalMTBOT = globalMTBOT;
+            Scribe_Deep.Look(ref GlobalOrbitalTrade, "AdjustableTradeShips.GlobalOrbitalTrade");
         }
 
-        public static void DoSettingsWindowContents(Rect rect)
+        public static void DoSettingsWindowContents(Rect inRect)
         {
+            // Init
+            StoryTellerDefaultsUtil.Init();
+
+            StorytellerDef currentStoryTeller;
+            StoryTellerDefaults defaults;
+            //List<TabRecord> tabs = new List<TabRecord>(2);
+            //Tabs selectedTab;
+            if (Current.Game != null)
+            {
+                currentStoryTeller = Current.Game.storyteller.def;
+                defaults = StoryTellerDefaultsUtil.GetStoryTellerDefaults(currentStoryTeller);
+
+                /*selectedTab = Tabs.ATS_Game;
+                tabs.Add(new TabRecord(
+                    Tabs.ATS_Game.ToString().Translate(),
+                    delegate { selectedTab = Tabs.ATS_Game; },
+                    selectedTab == Tabs.ATS_Game));*/
+            }
+            else
+            {
+                currentStoryTeller = null;
+                defaults = StoryTellerDefaultsUtil.defaultDefaults;
+
+                /*selectedTab = Tabs.ATS_Global;
+                tabs.Add(new TabRecord(
+                    Tabs.ATS_Global.ToString().Translate(),
+                    delegate { selectedTab = Tabs.ATS_Global; },
+                    selectedTab == Tabs.ATS_Global));*/
+            }
+            if (GlobalOrbitalTrade == null)
+            {
+                StoryTellerDefaultsUtil.defaultDefaults.TryGetIncident(IncidentDefOf.OrbitalTraderArrival, out GlobalOrbitalTrade);
+            }
+
+
+            // Draw Contents
+            // Global
             Text.Font = GameFont.Small;
             float y = 60;
-            Widgets.Label(new Rect(0, y, 600, 40), "AdjustableTradeShips.SetMTBOT".Translate());
+            Widgets.Label(new Rect(0, y, 600, 40), "AdjustableTradeShips.Global".Translate());
+            y += 40;
+            
+            Widgets.Label(new Rect(20, y, 600, 40), "AdjustableTradeShips.TradeShips".Translate());
             y += 40;
 
-            // Global MTBOT
-            NumberInput(0, y, "AdjustableTradeShips.Global".Translate(), ref globalMTBOT, ref globalMTBOTString, MIN_VALUE, MAX_VALUE, DEFAULT_MTBOT);
+            OnOffIncident otDefaults;
+            StoryTellerDefaultsUtil.defaultDefaults.TryGetIncident(IncidentDefOf.OrbitalTraderArrival, out otDefaults);
+            
+            NumberInput(40, y, "AdjustableTradeShips.OnDays".Translate(), ref GlobalOrbitalTrade.OnDays, MIN_ONOFF_VALUE, MAX_VALUE, otDefaults.OnDays);
+            y += 40;
+            
+            NumberInput(40, y, "AdjustableTradeShips.OffDays".Translate(), ref GlobalOrbitalTrade.OffDays, MIN_ONOFF_VALUE, MAX_VALUE, otDefaults.OffDays);
+            y += 40;
+
+            NumberInput(40, y, "AdjustableTradeShips.MinInstances".Translate(), ref GlobalOrbitalTrade.MinInstances, MIN_VALUE, MAX_VALUE, otDefaults.MinInstances);
+            y += 40;
+
+            if (GlobalOrbitalTrade.MinInstances > GlobalOrbitalTrade.MaxInstances)
+            {
+                GlobalOrbitalTrade.MaxInstances = GlobalOrbitalTrade.MinInstances;
+            }
+
+            NumberInput(40, y, "AdjustableTradeShips.MaxInstances".Translate(), ref GlobalOrbitalTrade.MaxInstances, MIN_VALUE, MAX_VALUE, otDefaults.MaxInstances);
             y += 40;
 
             // Current Game
-            if (Current.Game != null)
+            if (Current.Game != null && GameOrbitalTrade != null)
             {
-                Widgets.DrawLineHorizontal(20, y, rect.width - 40);
+                Widgets.DrawLineHorizontal(20, y, inRect.width - 40);
                 y += 40;
 
-                bool hasOrbitalTraders = StoryTellerUtil.HasOrbitalTraders();
-                if (hasOrbitalTraders)
+                Widgets.Label(new Rect(0, y, 600, 40), "AdjustableTradeShips.CurrentGame".Translate());
+                y += 40;
+                
+                if (StoryTellerUtil.HasOrbitalTraders())
                 {
-                    // Game MTBOT
-                    float origMTBOT = gameMTBOT;
-                    NumberInput(0, y, "AdjustableTradeShips.CurrentGame".Translate(), ref gameMTBOT, ref gameMTBOTString, MIN_VALUE, MAX_VALUE, DEFAULT_MTBOT);
+                    Widgets.Label(new Rect(20, y, 600, 40), "AdjustableTradeShips.TradeShips".Translate());
+                    y += 40;
 
-                    if (origMTBOT != gameMTBOT)
+                    defaults.TryGetIncident(IncidentDefOf.OrbitalTraderArrival, out otDefaults);
+
+                    // Game Orbital Trade
+                    bool changed = false;
+                    NumberInput(40, y, "AdjustableTradeShips.OnDays".Translate(), ref GameOrbitalTrade.OnDays, MIN_ONOFF_VALUE, MAX_VALUE, otDefaults.OnDays, ref changed);
+                    y += 40;
+
+                    NumberInput(40, y, "AdjustableTradeShips.OffDays".Translate(), ref GameOrbitalTrade.OffDays, MIN_ONOFF_VALUE, MAX_VALUE, otDefaults.OffDays, ref changed);
+                    y += 40;
+
+                    NumberInput(40, y, "AdjustableTradeShips.MinInstances".Translate(), ref GameOrbitalTrade.MinInstances, MIN_VALUE, MAX_VALUE, otDefaults.MinInstances, ref changed);
+                    y += 40;
+
+                    if (GameOrbitalTrade.MinInstances > GameOrbitalTrade.MaxInstances)
                     {
-                        StoryTellerUtil.ApplyMTBOT(gameMTBOT);
+                        GameOrbitalTrade.MaxInstances = GameOrbitalTrade.MinInstances;
+                    }
+
+                    NumberInput(40, y, "AdjustableTradeShips.MaxInstances".Translate(), ref GameOrbitalTrade.MaxInstances, MIN_VALUE, MAX_VALUE, otDefaults.MaxInstances, ref changed);
+                    y += 40;
+
+                    if (changed)
+                    {
+                        StoryTellerUtil.ApplyOrbitalTrade(GameOrbitalTrade.OnDays, GameOrbitalTrade.OffDays, GameOrbitalTrade.MinInstances, GameOrbitalTrade.MaxInstances);
                     }
                 }
                 else
                 {
-                    Widgets.Label(new Rect(0, y, 300, 20), Current.Game.storyteller.def.label + ": " + "AdjustableTradeShips.CannotModifyOrbitalTraderTimes".Translate());
+                    Widgets.Label(new Rect(20, y, 300, 20), Current.Game.storyteller.def.label + ": " + "AdjustableTradeShips.CannotModifyOrbitalTraderTimes".Translate());
                 }
                 y += 25;
-
+/*
                 bool hasAllyInteraction = StoryTellerUtil.HasAllyInteraction();
                 if (hasAllyInteraction)
                 {
@@ -127,15 +182,17 @@ namespace AdjustableTradeShips
                 {
                     Widgets.Label(new Rect(0, y, 300, 20), Current.Game.storyteller.def.label + ": " + "AdjustableTradeShips.CannotModifyAllyInteractionTimes".Translate());
                 }
-                y += 25;
+                y += 25;*/
             }
         }
 
-        private static void NumberInput(float x, float y, string label, ref float val, ref string buffer, float min, float max, float defaultValue)
+        private static void NumberInput(float x, float y, string label, ref float val, float min, float max, float defaultValue)
         {
+            float orig = val;
             try
             {
                 Widgets.Label(new Rect(x, y, 175, 20), label);
+                string buffer = val.ToString();
                 Widgets.TextFieldNumeric<float>(new Rect(x + 180, y, 115 - x, 20), ref val, ref buffer, min, max);
                 if (Widgets.ButtonText(new Rect(300, y, 100, 20), "AdjustableTradeShips.Default".Translate()))
                 {
@@ -146,7 +203,16 @@ namespace AdjustableTradeShips
             catch
             {
                 val = min;
-                buffer = min.ToString();
+            }
+        }
+
+        private static void NumberInput(float x, float y, string label, ref float val, float min, float max, float defaultValue, ref bool changed)
+        {
+            float orig = val;
+            NumberInput(x, y, label, ref val, min, max, defaultValue);
+            if (orig != val)
+            {
+                changed = true;
             }
         }
     }

@@ -1,5 +1,7 @@
-﻿using Harmony;
+﻿using System;
 using System.Reflection;
+using Harmony;
+using RimWorld;
 using Verse;
 
 namespace AdjustableTradeShips
@@ -11,8 +13,12 @@ namespace AdjustableTradeShips
         {
             var harmony = HarmonyInstance.Create("com.modifyresearchtime.rimworld.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
-
-            Log.Message("AdjustableTradeShips: Adding Harmony Postfix to Game.InitNewGame");
+            Log.Message(
+                "AdjustableTradeShips Harmony Patches:" + Environment.NewLine +
+                "  Prefix:" + Environment.NewLine +
+                "    Game.InitNewGame" + Environment.NewLine +
+                "  Postfix:" + Environment.NewLine +
+                "    Storyteller.Notify_DefChanged");
         }
     }
 
@@ -24,11 +30,16 @@ namespace AdjustableTradeShips
 #if DEBUG
             Log.Warning("Patch_Game_InitNewGame Postfix");
 #endif
-            if (StoryTellerUtil.HasOrbitalTraders())
-            {
-                Settings.GameMTBOT = Settings.GlobalMTBOT;
-                StoryTellerUtil.ApplyMTBOT(Settings.GameMTBOT);
-            }
+            WorldComp.Initialize();
+        }
+    }
+
+    [HarmonyPatch(typeof(Storyteller), "Notify_DefChanged")]
+    static class Patch_Storyteller_Notify_DefChanged
+    {
+        static void Postfix()
+        {
+            WorldComp.Initialize();
         }
     }
 }

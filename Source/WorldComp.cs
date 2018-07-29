@@ -1,4 +1,5 @@
-﻿using RimWorld.Planet;
+﻿using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace AdjustableTradeShips
@@ -9,41 +10,49 @@ namespace AdjustableTradeShips
 
         public WorldComp(World world) : base(world) { }
 
-        public static void InitializeNewGame()
+        public static void Initialize()
         {
 #if DEBUG
             Log.Warning("WorldComp.InitializeNewGame");
 #endif
+            StoryTellerDefaultsUtil.Init();
+
             if (StoryTellerUtil.HasOrbitalTraders())
             {
-                Settings.GameMTBOT = Settings.GlobalMTBOT;
-                StoryTellerUtil.ApplyMTBOT(Settings.GameMTBOT);
+                Settings.GameOrbitalTrade = new OnOffIncident();
+                Settings.GameOrbitalTrade.Incident = Settings.GlobalOrbitalTrade.Incident;
+                Settings.GameOrbitalTrade.OnDays = Settings.GlobalOrbitalTrade.OnDays;
+                Settings.GameOrbitalTrade.OffDays = Settings.GlobalOrbitalTrade.OffDays;
+                Settings.GameOrbitalTrade.MinInstances = Settings.GlobalOrbitalTrade.MinInstances;
+                Settings.GameOrbitalTrade.MaxInstances = Settings.GlobalOrbitalTrade.MaxInstances;
+
+                StoryTellerUtil.ApplyOrbitalTrade(
+                    Settings.GameOrbitalTrade.OnDays, Settings.GameOrbitalTrade.OffDays,
+                    Settings.GameOrbitalTrade.MinInstances, Settings.GameOrbitalTrade.MaxInstances);
             }
+        }
+
+        public override void FinalizeInit()
+        {
+            base.FinalizeInit();
+            WorldComp.Initialize();
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-            float gameMtbot = Settings.GameMTBOT;
-            float mtbAllyInteractions = Settings.MtbAllyInteractions;
-            float minDaysBetweenAllyInteractions = Settings.MinDaysBetweenAllyInteraction;
+            OnOffIncident gameOT = Settings.GameOrbitalTrade;
 
-            Scribe_Values.Look<float>(ref gameMtbot, "AdjustableTradeShips.MTBOT", Settings.DEFAULT_MTBOT);
-            Scribe_Values.Look<float>(ref mtbAllyInteractions, "AdjustableTradeShips.MTBAlly", Settings.DEFAULT_MTB_ALLY_INTERACTIONS);
-            Scribe_Values.Look<float>(ref minDaysBetweenAllyInteractions, "AdjustableTradeShips.MinDaysAlly", Settings.DEFAULT_MIN_DAYS_BETWEEN_ALLY_INTERACTIONS);
+            Scribe_Deep.Look(ref gameOT, "AdjustableTradeShips.OrbitalTrader");
 
-            Settings.GameMTBOT = gameMtbot;
-            Settings.MtbAllyInteractions = mtbAllyInteractions;
-            Settings.MinDaysBetweenAllyInteraction = minDaysBetweenAllyInteractions;
+            Settings.GameOrbitalTrade = gameOT;
 
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && Settings.GameOrbitalTrade != null)
             {
-#if DEBUG
-                Log.Warning(Scribe.mode + " Apply MTBOT");
-#endif
-                StoryTellerUtil.ApplyMTBOT(gameMtbot);
-                StoryTellerUtil.ApplyAllyInteraction(minDaysBetweenAllyInteractions, mtbAllyInteractions);
+                StoryTellerUtil.ApplyOrbitalTrade(
+                    Settings.GameOrbitalTrade.OnDays, Settings.GameOrbitalTrade.OffDays,
+                    Settings.GameOrbitalTrade.MinInstances, Settings.GameOrbitalTrade.MaxInstances);
             }
         }
     }

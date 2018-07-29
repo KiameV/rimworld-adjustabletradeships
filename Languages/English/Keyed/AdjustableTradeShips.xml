@@ -7,9 +7,17 @@
 	<AdjustableTradeShips.Default>Default</AdjustableTradeShips.Default>
 	
 	<!-- Labels on the Settings page -->
-	<AdjustableTradeShips.SetMTBOT>Set the average time (in days) between trade ships</AdjustableTradeShips.SetMTBOT>
 	<AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
 	<AdjustableTradeShips.CurrentGame>Current Game</AdjustableTradeShips.CurrentGame>
+	<AdjustableTradeShips.TradeShips>Orbital Trade Ships</AdjustableTradeShips.TradeShips>
+
+
+	<AdjustableTradeShips.OnDays>On Days</AdjustableTradeShips.OnDays>
+	<AdjustableTradeShips.OffDays>Off Days</AdjustableTradeShips.OffDays>
+	<AdjustableTradeShips.MinInstances>Min Instances</AdjustableTradeShips.MinInstances>
+	<AdjustableTradeShips.MaxInstances>Min Instances</AdjustableTradeShips.MaxInstances>
+
+	<!-- Currently Not Used -->
 	<AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
 	<AdjustableTradeShips.MinDaysBetween>Min Days Between</AdjustableTradeShips.MinDaysBetween>
 	<AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>

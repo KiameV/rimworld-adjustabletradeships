@@ -7,34 +7,34 @@ namespace AdjustableTradeShips
     {
         public static bool HasOrbitalTraders()
         {
-            StorytellerCompProperties_SingleMTB comp;
+            StorytellerCompProperties_OnOffCycle comp;
             return TryGetOrbitalTraders(out comp);
         }
 
-        public static void ApplyMTBOT(float mtbot)
+        public static void ApplyOrbitalTrade(float onDays, float offDays, float minInstances, float maxInstances)
         {
-            StorytellerCompProperties_SingleMTB comp;
+            StorytellerCompProperties_OnOffCycle comp;
             if (TryGetOrbitalTraders(out comp))
             {
-                comp.mtbDays = mtbot;
-            }
+                comp.numIncidentsRange.min = onDays;
+                comp.numIncidentsRange.max = offDays;
+                comp.numIncidentsRange.min = minInstances;
+                comp.numIncidentsRange.max = maxInstances;
+            };
         }
 
-        private static bool TryGetOrbitalTraders(out StorytellerCompProperties_SingleMTB comp)
+        public static bool TryGetOrbitalTraders(out StorytellerCompProperties_OnOffCycle comp)
         {
             if (Current.Game != null && Current.Game.storyteller != null)
             {
                 StorytellerDef d = Current.Game.storyteller.def;
                 foreach (StorytellerCompProperties c in d.comps)
                 {
-                    if (c is StorytellerCompProperties_SingleMTB)
+                    StorytellerCompProperties_OnOffCycle ooc = c as StorytellerCompProperties_OnOffCycle;
+                    if (ooc != null && ooc.incident == IncidentDefOf.OrbitalTraderArrival)
                     {
-                        StorytellerCompProperties_SingleMTB mtb = c as StorytellerCompProperties_SingleMTB;
-                        if (mtb != null && mtb.incident.defName.EqualsIgnoreCase("OrbitalTraderArrival"))
-                        {
-                            comp = mtb;
-                            return true;
-                        }
+                        comp = ooc;
+                        return true;
                     }
                 }
             }
@@ -42,33 +42,31 @@ namespace AdjustableTradeShips
             return false;
         }
 
-        public static bool HasAllyInteraction()
-        {
-            if (Current.Game != null && Current.Game.storyteller != null)
-            {
-                StorytellerDef d = Current.Game.storyteller.def;
-                foreach (StorytellerCompProperties c in d.comps)
-                {
-                    if (c is StorytellerCompProperties_FactionInteraction)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
 
-        public static void ApplyAllyInteraction(float minDaysAllyInteractions, float mtbAllyInteractions)
+
+
+
+
+
+        public static bool HasInteraction(IncidentDef def)
         {
             StorytellerCompProperties_FactionInteraction comp;
-            if (TryGetAllyInteraction(out comp))
+            return TryGetAllyInteraction(def, out comp);
+        }
+
+        public static void ApplyAllyInteraction(IncidentDef def, StorytellerCompProperties_FactionInteraction fi)
+        {
+            StorytellerCompProperties_FactionInteraction comp;
+            if (TryGetAllyInteraction(def, out comp))
             {
-                comp.minDaysPassed = minDaysAllyInteractions;
-                comp.baseMtbDays = mtbAllyInteractions;
+                comp.minDaysPassed = fi.minDaysPassed;
+                comp.baseIncidentsPerYear = fi.baseIncidentsPerYear;
+                comp.minSpacingDays = fi.minSpacingDays;
+                comp.minDaysPassed = fi.minDaysPassed;
             }
         }
 
-        private static bool TryGetAllyInteraction(out StorytellerCompProperties_FactionInteraction comp)
+        private static bool TryGetAllyInteraction(IncidentDef def, out StorytellerCompProperties_FactionInteraction comp)
         {
             if (Current.Game != null && Current.Game.storyteller != null)
             {
@@ -76,7 +74,7 @@ namespace AdjustableTradeShips
                 foreach (StorytellerCompProperties c in d.comps)
                 {
                     comp = c as StorytellerCompProperties_FactionInteraction;
-                    if (comp != null)
+                    if (comp != null && comp.incident == def)
                     {
                         return true;
                     }
