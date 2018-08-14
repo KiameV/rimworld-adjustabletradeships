@@ -15,7 +15,7 @@
 	<AdjustableTradeShips.OnDays>On Days</AdjustableTradeShips.OnDays>
 	<AdjustableTradeShips.OffDays>Off Days</AdjustableTradeShips.OffDays>
 	<AdjustableTradeShips.MinInstances>Min Instances</AdjustableTradeShips.MinInstances>
-	<AdjustableTradeShips.MaxInstances>Min Instances</AdjustableTradeShips.MaxInstances>
+	<AdjustableTradeShips.MaxInstances>Max Instances</AdjustableTradeShips.MaxInstances>
 
 	<!-- Currently Not Used -->
 	<AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
