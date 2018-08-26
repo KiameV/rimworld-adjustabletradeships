@@ -40,6 +40,9 @@ namespace AdjustableTradeShips
         private OrbitalTradeBuffers globalOtBuffers = null;
         private OrbitalTradeBuffers gameOtBuffers = null;
 
+        private float weight;
+        private string weightBuffer = null;
+
         public SettingsController(ModContentPack content) : base(content)
         {
             base.GetSettings<Settings>();
@@ -160,7 +163,7 @@ namespace AdjustableTradeShips
             y += 40;
 
             // Current Game
-            if (Current.Game != null && Settings.GameOrbitalTrade != null)
+            if (Current.Game != null)
             {
                 Widgets.DrawLineHorizontal(20, y, inRect.width - 40);
                 y += 40;
@@ -168,7 +171,7 @@ namespace AdjustableTradeShips
                 Widgets.Label(new Rect(0, y, 600, 40), "AdjustableTradeShips.CurrentGame".Translate());
                 y += 40;
 
-                if (StoryTellerUtil.HasOrbitalTraders())
+                if (StoryTellerUtil.HasOrbitalTraders() && Settings.GameOrbitalTrade != null)
                 {
                     Widgets.Label(new Rect(20, y, 600, 40), "AdjustableTradeShips.TradeShips".Translate());
                     y += 40;
@@ -186,7 +189,6 @@ namespace AdjustableTradeShips
 
                     if (Widgets.ButtonText(new Rect(0, y, 100, 32), "AdjustableTradeShips.Default".Translate()))
                     {
-
                         if (StoryTellerDefaultsUtil.TryGetStoryTellerDefault(IncidentDefOf.OrbitalTraderArrival, out OnOffIncident ooi))
                         {
                             Settings.GameOrbitalTrade.Days = ooi.Days;
@@ -211,11 +213,60 @@ namespace AdjustableTradeShips
                         this.gameOtBuffers = null;
                     }
                 }
+                else if (StoryTellerUtil.HasRandom())
+                {
+                    if (this.weightBuffer == null)
+                    {
+                        if (StoryTellerUtil.TryGetRandomWeight(IncidentCategoryDefOf.OrbitalVisitor, out float weight))
+                        {
+                            this.weight = weight;
+                            this.weightBuffer = weight.ToString();
+                        }
+                    }
+
+                    NumberInput(20, y, "Orbital Visitor Weight", ref this.weight, ref this.weightBuffer, MIN_VALUE, MAX_VALUE);
+                    y += 40;
+
+                    if (Widgets.ButtonText(new Rect(0, y, 100, 32), "AdjustableTradeShips.Default".Translate()))
+                    {
+                        this.weight = 1.0f;
+                        this.weightBuffer = "1.0";
+                    }
+
+                    if (Widgets.ButtonText(new Rect(200, y, 100, 32), "AdjustableTradeShips.Apply".Translate()))
+                    {
+                        StoryTellerUtil.ApplyRandom(IncidentCategoryDefOf.OrbitalVisitor, this.weight);
+                        Messages.Message("AdjustableTradeShips.GameSettingsApplied".Translate(), MessageTypeDefOf.PositiveEvent);
+                        this.weightBuffer = this.weight.ToString();
+                    }
+
+                }
                 else
                 {
-                    Widgets.Label(new Rect(20, y, 300, 20), Current.Game.storyteller.def.label + ": " + "AdjustableTradeShips.CannotModifyOrbitalTraderTimes".Translate());
+                    Widgets.Label(new Rect(20, y, 300, 32), Current.Game.storyteller.def.label + ": " + "AdjustableTradeShips.CannotModifyOrbitalTraderTimes".Translate());
                 }
                 y += 25;
+            }
+        }
+
+        private void NumberInput(float x, float y, string label, ref float val, ref string buffer, float min, float max)
+        {
+            Widgets.Label(new Rect(x, y, 175, 20), label);
+            buffer = Widgets.TextField(new Rect(x + 180, y, 115 - x, 20), buffer);
+            if (buffer.Length > 0)
+            {
+                if (float.TryParse(buffer, out float v))
+                {
+                    val = v;
+                    if (val > max)
+                        val = max;
+                    else if (val < min)
+                        val = min;
+                }
+                else
+                {
+                    val = min;
+                }
             }
         }
 

@@ -5,10 +5,12 @@ namespace AdjustableTradeShips
 {
     static class StoryTellerUtil
     {
+        private static StorytellerDef storyTeller = null;
+        private static bool hasOrbitalTraders = false;
+
         public static bool HasOrbitalTraders()
-        {
-            StorytellerCompProperties_OnOffCycle comp;
-            return TryGetOrbitalTraders(out comp);
+        {  
+            return TryGetOrbitalTraders(out StorytellerCompProperties_OnOffCycle comp);
         }
 
         public static void ApplyOrbitalTrade(float days, float instances)
@@ -23,23 +25,90 @@ namespace AdjustableTradeShips
 
         public static bool TryGetOrbitalTraders(out StorytellerCompProperties_OnOffCycle comp)
         {
+            comp = null;
             if (Current.Game != null && Current.Game.storyteller != null)
             {
+                if (storyTeller == Current.Game.storyteller.def)
+                {
+                    return hasOrbitalTraders;
+                }
+
                 StorytellerDef d = Current.Game.storyteller.def;
                 foreach (StorytellerCompProperties c in d.comps)
                 {
                     StorytellerCompProperties_OnOffCycle ooc = c as StorytellerCompProperties_OnOffCycle;
                     if (ooc != null && ooc.incident == IncidentDefOf.OrbitalTraderArrival)
                     {
+                        storyTeller = Current.Game.storyteller.def;
+                        hasOrbitalTraders = true;
                         comp = ooc;
                         return true;
                     }
                 }
+                storyTeller = Current.Game.storyteller.def;
+                hasOrbitalTraders = false;
             }
-            comp = null;
             return false;
         }
 
+
+
+
+
+        public static bool HasRandom()
+        {
+            return TryGetRandom(out StorytellerCompProperties_RandomMain comp);
+        }
+
+        public static void ApplyRandom(IncidentCategoryDef def, float weight)
+        {
+            if (TryGetRandom(out StorytellerCompProperties_RandomMain comp))
+            {
+                foreach (IncidentCategoryEntry e in comp.categoryWeights)
+                {
+                    if (e.category == def)
+                    {
+                        e.weight = weight;
+                    }
+                }
+            }
+        }
+
+        public static bool TryGetRandomWeight(IncidentCategoryDef def, out float weight)
+        {
+            if (TryGetRandom(out StorytellerCompProperties_RandomMain comp))
+            {
+                foreach (IncidentCategoryEntry e in comp.categoryWeights)
+                {
+                    if (e.category == def)
+                    {
+                        weight = e.weight;
+                        return true;
+                    }
+                }
+            }
+            weight = 0;
+            return false;
+        }
+
+        private static bool TryGetRandom(out StorytellerCompProperties_RandomMain comp)
+        {
+            comp = null;
+            if (Current.Game != null && Current.Game.storyteller != null)
+            {
+                StorytellerDef d = Current.Game.storyteller.def;
+                foreach (StorytellerCompProperties c in d.comps)
+                {
+                    StorytellerCompProperties_RandomMain rm = c as StorytellerCompProperties_RandomMain;
+                    if (rm != null)
+                    {
+                        comp = rm;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
 
 
