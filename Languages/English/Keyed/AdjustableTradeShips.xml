@@ -4,6 +4,7 @@
 	<AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
 	
 	<!-- Buttons -->
+	<AdjustableTradeShips.Apply>Apply</AdjustableTradeShips.Apply>
 	<AdjustableTradeShips.Default>Default</AdjustableTradeShips.Default>
 	
 	<!-- Labels on the Settings page -->
@@ -11,11 +12,12 @@
 	<AdjustableTradeShips.CurrentGame>Current Game</AdjustableTradeShips.CurrentGame>
 	<AdjustableTradeShips.TradeShips>Orbital Trade Ships</AdjustableTradeShips.TradeShips>
 
+	<AdjustableTradeShips.OTS>orbital trade ships every</AdjustableTradeShips.OTS>
+	<AdjustableTradeShips.Days>days</AdjustableTradeShips.Days>
 
-	<AdjustableTradeShips.OnDays>On Days</AdjustableTradeShips.OnDays>
-	<AdjustableTradeShips.OffDays>Off Days</AdjustableTradeShips.OffDays>
-	<AdjustableTradeShips.MinInstances>Min Instances</AdjustableTradeShips.MinInstances>
-	<AdjustableTradeShips.MaxInstances>Max Instances</AdjustableTradeShips.MaxInstances>
+	<!-- Messages -->
+	<AdjustableTradeShips.GlobalSettingsApplied>Global settings applied</AdjustableTradeShips.GlobalSettingsApplied>
+	<AdjustableTradeShips.GameSettingsApplied>Game settings applied</AdjustableTradeShips.GameSettingsApplied>
 
 	<!-- Currently Not Used -->
 	<AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>

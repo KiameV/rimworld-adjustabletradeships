@@ -11,15 +11,13 @@ namespace AdjustableTradeShips
             return TryGetOrbitalTraders(out comp);
         }
 
-        public static void ApplyOrbitalTrade(float onDays, float offDays, float minInstances, float maxInstances)
+        public static void ApplyOrbitalTrade(float days, float instances)
         {
             StorytellerCompProperties_OnOffCycle comp;
             if (TryGetOrbitalTraders(out comp))
             {
-                comp.numIncidentsRange.min = onDays;
-                comp.numIncidentsRange.max = offDays;
-                comp.numIncidentsRange.min = minInstances;
-                comp.numIncidentsRange.max = maxInstances;
+                comp.numIncidentsRange.min = days;
+                comp.numIncidentsRange.max = instances;
             };
         }
 

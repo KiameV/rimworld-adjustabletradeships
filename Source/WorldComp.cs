@@ -15,20 +15,17 @@ namespace AdjustableTradeShips
 #if DEBUG
             Log.Warning("WorldComp.InitializeNewGame");
 #endif
-            StoryTellerDefaultsUtil.Init();
-
             if (StoryTellerUtil.HasOrbitalTraders())
             {
-                Settings.GameOrbitalTrade = new OnOffIncident();
-                Settings.GameOrbitalTrade.Incident = Settings.GlobalOrbitalTrade.Incident;
-                Settings.GameOrbitalTrade.OnDays = Settings.GlobalOrbitalTrade.OnDays;
-                Settings.GameOrbitalTrade.OffDays = Settings.GlobalOrbitalTrade.OffDays;
-                Settings.GameOrbitalTrade.MinInstances = Settings.GlobalOrbitalTrade.MinInstances;
-                Settings.GameOrbitalTrade.MaxInstances = Settings.GlobalOrbitalTrade.MaxInstances;
+                Settings.GameOrbitalTrade = new OnOffIncident
+                {
+                    Incident = Settings.GlobalOrbitalTrade.Incident,
+                    Days = Settings.GlobalOrbitalTrade.Days,
+                    Instances = Settings.GlobalOrbitalTrade.Instances,
+                };
 
                 StoryTellerUtil.ApplyOrbitalTrade(
-                    Settings.GameOrbitalTrade.OnDays, Settings.GameOrbitalTrade.OffDays,
-                    Settings.GameOrbitalTrade.MinInstances, Settings.GameOrbitalTrade.MaxInstances);
+                    Settings.GameOrbitalTrade.Days, Settings.GameOrbitalTrade.Instances);
             }
         }
 
@@ -51,8 +48,7 @@ namespace AdjustableTradeShips
                 else
                 {
                     StoryTellerUtil.ApplyOrbitalTrade(
-                        Settings.GameOrbitalTrade.OnDays, Settings.GameOrbitalTrade.OffDays,
-                        Settings.GameOrbitalTrade.MinInstances, Settings.GameOrbitalTrade.MaxInstances);
+                        Settings.GameOrbitalTrade.Days, Settings.GameOrbitalTrade.Instances);
                 }
             }
         }

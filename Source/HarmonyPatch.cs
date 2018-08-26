@@ -39,6 +39,9 @@ namespace AdjustableTradeShips
     {
         static void Postfix()
         {
+#if DEBUG
+            Log.Warning("Patch_Storyteller_Notify_DefChanged Postfix");
+#endif
             WorldComp.Initialize();
         }
     }

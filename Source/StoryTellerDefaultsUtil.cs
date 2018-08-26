@@ -4,9 +4,80 @@ using Verse;
 
 namespace AdjustableTradeShips
 {
+    public class OnOffIncident : IExposable
+    {
+        public IncidentDef Incident;
+        public float Days;
+        public float Instances;
+
+        public void ExposeData()
+        {
+            Scribe_Defs.Look(ref Incident, "incident");
+            Scribe_Values.Look(ref Days, "days");
+            Scribe_Values.Look(ref Instances, "instances");
+        }
+    }
+
     class StoryTellerDefaultsUtil
     {
-        public static StoryTellerDefaults defaultDefaults;
+        public static OnOffIncident GetGlobalDefault(IncidentDef def)
+        {
+            if (def == IncidentDefOf.OrbitalTraderArrival)
+            {
+                return new OnOffIncident
+                {
+                    Days = 15,
+                    Instances = 1,
+                };
+            }
+            return null;
+        }
+
+        public static bool TryGetStoryTellerDefault(IncidentDef incidentDef, out OnOffIncident incident)
+        {
+            foreach (StorytellerDef def in DefDatabase<StorytellerDef>.AllDefs)
+            {
+                if (def == Current.Game.storyteller.def)
+                {
+                    foreach (StorytellerCompProperties comp in def.comps)
+                    {
+                        if (comp is StorytellerCompProperties_OnOffCycle)
+                        {
+                            StorytellerCompProperties_OnOffCycle ooc = (StorytellerCompProperties_OnOffCycle)comp;
+                            if (ooc.incident == incidentDef)
+                            {
+                                incident = new OnOffIncident
+                                {
+                                    Incident = ooc.incident,
+                                    Days = ooc.onDays + ooc.offDays,
+                                    Instances = ooc.numIncidentsRange.TrueMin,
+                                };
+                                return true;
+                            }
+                        }
+                        /*else if (comp is StorytellerCompProperties_FactionInteraction)
+                        {
+                            StorytellerCompProperties_FactionInteraction fi = (StorytellerCompProperties_FactionInteraction)comp;
+                            interactions.Add(new FactionInteraction
+                            {
+                                Incident = fi.incident,
+                                IncidenctsPerYear = fi.baseIncidentsPerYear,
+                                MinSpacingDays = fi.minSpacingDays,
+                                FullAlliesOnly = fi.fullAlliesOnly,
+                                MinDanger = fi.minDanger,
+                                MinDaysPassed = fi.minDaysPassed
+                            });
+                        }*/
+                    }
+                    break;
+                }
+            }
+            incident = null;
+            return false;
+        }
+    }
+}
+        /*public static StoryTellerDefaults defaultDefaults;
         public static readonly List<StoryTellerDefaults> Defaults = new List<StoryTellerDefaults>();
 
         public static void Init()
@@ -26,10 +97,8 @@ namespace AdjustableTradeShips
                             onOffIncidents.Add(new OnOffIncident
                             {
                                 Incident = ooc.incident,
-                                OnDays = ooc.onDays,
-                                OffDays = ooc.offDays,
-                                MinInstances = ooc.numIncidentsRange.min,
-                                MaxInstances = ooc.numIncidentsRange.max,
+                                Days = ooc.onDays + ooc.offDays,
+                                Instances = ooc.numIncidentsRange.min,
                             });
                         }
                         else if (comp is StorytellerCompProperties_FactionInteraction)
@@ -52,10 +121,8 @@ namespace AdjustableTradeShips
                 onOffCycle.Add(new OnOffIncident
                 {
                     Incident = IncidentDefOf.OrbitalTraderArrival,
-                    OnDays = 7,
-                    OffDays = 8,
-                    MinInstances = FloatRange.One.min,
-                    MaxInstances = FloatRange.One.max,
+                    Days = 15,
+                    Instances = FloatRange.One.min,
                 });
                 defaultDefaults = new StoryTellerDefaults(null, onOffCycle, new List<FactionInteraction>(0));
             }
@@ -138,22 +205,4 @@ namespace AdjustableTradeShips
             Scribe_Values.Look(ref MinDaysPassed, "minDaysPassed");
         }
     }
-
-    public class OnOffIncident : IExposable
-    {
-        public IncidentDef Incident;
-        public float OnDays;
-        public float OffDays;
-        public float MinInstances;
-        public float MaxInstances;
-
-        public void ExposeData()
-        {
-            Scribe_Defs.Look(ref Incident, "incident");
-            Scribe_Values.Look(ref OnDays, "onDays");
-            Scribe_Values.Look(ref OffDays, "offDays");
-            Scribe_Values.Look(ref MinInstances, "minInstances");
-            Scribe_Values.Look(ref MaxInstances, "maxInstances");
-        }
-    }
-}
+}*/
