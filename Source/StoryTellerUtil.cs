@@ -10,7 +10,7 @@ namespace AdjustableTradeShips
 
         public static bool HasOrbitalTraders()
         {
-            if (storyTeller == Current.Game.storyteller.def)
+            if (Current.Game != null && Current.Game.storyteller != null && storyTeller == Current.Game.storyteller.def)
             {
                 return hasOrbitalTraders;
             }
