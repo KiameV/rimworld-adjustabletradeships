@@ -5,16 +5,8 @@ namespace AdjustableTradeShips
 {
     static class StoryTellerUtil
     {
-        private static StorytellerDef storyTeller = null;
-        private static bool hasOrbitalTraders = false;
-
         public static bool HasOrbitalTraders()
         {
-            if (Current.Game != null && Current.Game.storyteller != null && storyTeller == Current.Game.storyteller.def)
-            {
-                return hasOrbitalTraders;
-            }
-
             return TryGetOrbitalTraders(out StorytellerCompProperties_OnOffCycle comp);
         }
 
@@ -38,14 +30,10 @@ namespace AdjustableTradeShips
                     StorytellerCompProperties_OnOffCycle ooc = c as StorytellerCompProperties_OnOffCycle;
                     if (ooc != null && ooc.incident == IncidentDefOf.OrbitalTraderArrival)
                     {
-                        storyTeller = Current.Game.storyteller.def;
-                        hasOrbitalTraders = true;
                         comp = ooc;
                         return true;
                     }
                 }
-                storyTeller = Current.Game.storyteller.def;
-                hasOrbitalTraders = false;
             }
             comp = null;
             return false;

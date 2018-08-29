@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModSyncNinjaData>
-  <ID>193b27c2-368d-4c4f-b027-5ee894f9da3a</ID>
   <ModName>Adjustable Trade Ships</ModName>
-  <Version>1.0.0.7</Version>
+  <Version>0.19.0.1</Version>
   <SaveBreaking>False</SaveBreaking>
   <Host name="Github">
     <Owner>KiameV</Owner>
