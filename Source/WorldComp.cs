@@ -1,4 +1,5 @@
-﻿using RimWorld.Planet;
+﻿using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace AdjustableTradeShips
@@ -16,6 +17,11 @@ namespace AdjustableTradeShips
 #endif
             if (StoryTellerUtil.HasOrbitalTraders())
             {
+                if (Settings.GlobalOrbitalTrade == null)
+                {
+                    Settings.GlobalOrbitalTrade = StoryTellerDefaultsUtil.GetGlobalDefault(IncidentDefOf.OrbitalTraderArrival);
+                }
+
                 Settings.GameOrbitalTrade = new OnOffIncident
                 {
                     Incident = Settings.GlobalOrbitalTrade.Incident,
