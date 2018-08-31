@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<!-- Mod name in the Settings tab -->
+	<AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
+	
+	<!-- Buttons -->
+	<AdjustableTradeShips.Apply>Aplicar</AdjustableTradeShips.Apply>
+	<AdjustableTradeShips.Default>Valores por defecto</AdjustableTradeShips.Default>
+	
+	<!-- Labels on the Settings page -->
+	<AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
+	<AdjustableTradeShips.CurrentGame>Juego actual</AdjustableTradeShips.CurrentGame>
+	<AdjustableTradeShips.TradeShips>Naves Comerciantes</AdjustableTradeShips.TradeShips>
+
+	<AdjustableTradeShips.OTS>naves comerciantes cada</AdjustableTradeShips.OTS>
+	<AdjustableTradeShips.Days>dias</AdjustableTradeShips.Days>
+
+	<!-- Messages -->
+	<AdjustableTradeShips.GlobalSettingsApplied>Configuracion Global aplicada</AdjustableTradeShips.GlobalSettingsApplied>
+	<AdjustableTradeShips.GameSettingsApplied>Configuracion de Juego actual aplicada</AdjustableTradeShips.GameSettingsApplied>
+</LanguageData>
