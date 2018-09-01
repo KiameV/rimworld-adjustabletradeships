@@ -15,7 +15,9 @@ namespace AdjustableTradeShips
             StorytellerCompProperties_OnOffCycle comp;
             if (TryGetOrbitalTraders(out comp))
             {
-                comp.numIncidentsRange.min = days;
+                comp.onDays = days;
+                comp.offDays = 0.001f;
+                comp.numIncidentsRange.min = instances;
                 comp.numIncidentsRange.max = instances;
             };
         }
