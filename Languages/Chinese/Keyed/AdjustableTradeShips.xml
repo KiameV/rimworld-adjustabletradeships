@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<!-- 标签卡上的Mod名 -->
+	<AdjustableTradeShips.ModName>可调整的贸易船</AdjustableTradeShips.ModName>
+	
+	<!-- 按钮 -->
+	<AdjustableTradeShips.Apply>应用</AdjustableTradeShips.Apply>
+	<AdjustableTradeShips.Default>默认</AdjustableTradeShips.Default>
+	
+	<!-- 设置页面上的文字 -->
+	<AdjustableTradeShips.Global>全局</AdjustableTradeShips.Global>
+	<AdjustableTradeShips.CurrentGame>目前的游戏</AdjustableTradeShips.CurrentGame>
+	<AdjustableTradeShips.TradeShips>轨道贸易船</AdjustableTradeShips.TradeShips>
+
+	<AdjustableTradeShips.OTS>每个轨道贸易船</AdjustableTradeShips.OTS>
+	<AdjustableTradeShips.Days>天数</AdjustableTradeShips.Days>
+
+	<!-- 信息 -->
+	<AdjustableTradeShips.GlobalSettingsApplied>全局设置</AdjustableTradeShips.GlobalSettingsApplied>
+	<AdjustableTradeShips.GameSettingsApplied>当前游戏设置</AdjustableTradeShips.GameSettingsApplied>
+
+	<!-- 目前未使用 -->
+	<AdjustableTradeShips.AllyInteractions>盟友互动</AdjustableTradeShips.AllyInteractions>
+	<AdjustableTradeShips.MinDaysBetween>最短的天数</AdjustableTradeShips.MinDaysBetween>
+	<AdjustableTradeShips.AverageDaysBetween>平均天数</AdjustableTradeShips.AverageDaysBetween>
+	<AdjustableTradeShips.CannotModifyOrbitalTraderTimes>无法修改的轨道贸易船频率</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
+	<AdjustableTradeShips.CannotModifyAllyInteractionTimes>无法修改盟友交互频率</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
+</LanguageData>
