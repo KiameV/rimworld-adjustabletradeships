@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<!-- Mod name in the Settings tab -->
+	<AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
+	
+	<!-- Buttons -->
+	<AdjustableTradeShips.Apply>Aplicar</AdjustableTradeShips.Apply>
+	<AdjustableTradeShips.Default>Padrão</AdjustableTradeShips.Default>
+	
+	<!-- Labels on the Settings page -->
+	<AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
+	<AdjustableTradeShips.CurrentGame>Jogo Atual</AdjustableTradeShips.CurrentGame>
+	<AdjustableTradeShips.TradeShips>Naves Mercadoras Orbitais</AdjustableTradeShips.TradeShips>
+
+	<AdjustableTradeShips.OTS>naves mercadoras orbitais a cada</AdjustableTradeShips.OTS>
+	<AdjustableTradeShips.Days>dias</AdjustableTradeShips.Days>
+
+	<!-- Messages -->
+	<AdjustableTradeShips.GlobalSettingsApplied>Configurações globais aplicadas</AdjustableTradeShips.GlobalSettingsApplied>
+	<AdjustableTradeShips.GameSettingsApplied>Configurações do jogo aplicadas</AdjustableTradeShips.GameSettingsApplied>
+
+	<!-- Currently Not Used -->
+	<AdjustableTradeShips.AllyInteractions>Interações com Aliados</AdjustableTradeShips.AllyInteractions>
+	<AdjustableTradeShips.MinDaysBetween>Min. de Dias Entre</AdjustableTradeShips.MinDaysBetween>
+	<AdjustableTradeShips.AverageDaysBetween>Média de Dias Entre</AdjustableTradeShips.AverageDaysBetween>
+	<AdjustableTradeShips.CannotModifyOrbitalTraderTimes>Impossível Modificar Intervalos de Mercadores Orbitais</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
+	<AdjustableTradeShips.CannotModifyAllyInteractionTimes>Impossível Modificar Invervalos de Interações com Aliados</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
+</LanguageData>
