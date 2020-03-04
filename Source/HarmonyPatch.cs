@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -11,7 +11,7 @@ namespace AdjustableTradeShips
     {
         static Main()
         {
-            var harmony = HarmonyInstance.Create("com.modifyresearchtime.rimworld.mod");
+            var harmony = new Harmony("com.modifyresearchtime.rimworld.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             Log.Message(
                 "AdjustableTradeShips Harmony Patches:" + Environment.NewLine +
