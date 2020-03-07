@@ -9,11 +9,26 @@ namespace AdjustableTradeShips
     {
         public static OnOffIncident GlobalOrbitalTrade = null;
         public static OnOffIncident GameOrbitalTrade = null;
+        public static string GlobalWeightBuffer = "1.0";
+        public static float GlobalWeight = 1.0f;
+        public static string GameWeightBuffer = "1.0";
+        public static float GameWeight = 1.0f;
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Deep.Look(ref GlobalOrbitalTrade, "AdjustableTradeShips.GlobalOrbitalTrade");
+            Scribe_Values.Look(ref GlobalWeight, "AdjustableTradeShips.GlobalWeight", 1.0f);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (GlobalWeightBuffer == null || GlobalWeightBuffer.Trim() == "")
+                {
+                    GlobalWeight = 1.0f;
+                }
+            }
+
+            GlobalWeightBuffer = GlobalWeight.ToString();
         }
     }
 
@@ -32,7 +47,7 @@ namespace AdjustableTradeShips
     {
         private const float MIN_ONOFF_VALUE = 0.1f;
 
-        private const float MIN_VALUE = 0.1f;
+        private const float MIN_VALUE = 0.0001f;
         private const float MAX_VALUE = 1000f;
 
         private bool isInitialized = false;
@@ -40,13 +55,10 @@ namespace AdjustableTradeShips
         private OrbitalTradeBuffers globalOtBuffers = null;
         private OrbitalTradeBuffers gameOtBuffers = null;
 
-        private float weight;
-        private string weightBuffer = null;
-
         public SettingsController(ModContentPack content) : base(content)
         {
             base.GetSettings<Settings>();
-        }
+    }
 
         public override string SettingsCategory()
         {
@@ -113,10 +125,25 @@ namespace AdjustableTradeShips
             {
                 this.globalOtBuffers = new OrbitalTradeBuffers(Settings.GlobalOrbitalTrade);
             }
+            if (Settings.GlobalWeightBuffer.NullOrEmpty())
+            {
+                Settings.GlobalWeightBuffer = "1.0";
+                Settings.GlobalWeight = 1.0f;
+            }
 
             if (this.gameOtBuffers == null && Current.Game != null && Settings.GameOrbitalTrade != null)
             {
                 this.gameOtBuffers = new OrbitalTradeBuffers(Settings.GameOrbitalTrade);
+            }
+
+            if (Settings.GameWeightBuffer.NullOrEmpty() && Current.Game != null)
+            {
+                Settings.GameWeightBuffer = Settings.GlobalWeightBuffer;
+                if (!float.TryParse(Settings.GameWeightBuffer, out Settings.GameWeight))
+                {
+                    Settings.GameWeight = 1.0f;
+                    Settings.GameWeightBuffer = "1.0";
+                }
             }
         }
 
@@ -145,6 +172,9 @@ namespace AdjustableTradeShips
             Widgets.Label(new Rect(100, y, inRect.width - 200, 32), "AdjustableTradeShips.Days".Translate());
             y += 40;
 
+            NumberInput(20, y, "AdjustableTradeShips.OrbitalVisitorWeight".Translate(), ref Settings.GlobalWeight, ref Settings.GlobalWeightBuffer, MIN_VALUE, MAX_VALUE);
+            y += 40;
+
             if (Widgets.ButtonText(new Rect(0, y, 100, 32), "AdjustableTradeShips.Default".Translate()))
             {
                 OnOffIncident ooi = StoryTellerDefaultsUtil.GetGlobalDefault(IncidentDefOf.OrbitalTraderArrival);
@@ -152,6 +182,8 @@ namespace AdjustableTradeShips
                 globalOtBuffers.Days = ooi.Days.ToString();
                 Settings.GlobalOrbitalTrade.Instances = ooi.Instances;
                 globalOtBuffers.Instances = ooi.Instances.ToString();
+                Settings.GlobalWeightBuffer = "1.0";
+                Settings.GlobalWeight = 1.0f;
             }
 
             if (Widgets.ButtonText(new Rect(200, y, 100, 32), "AdjustableTradeShips.Apply".Translate()))
@@ -215,31 +247,31 @@ namespace AdjustableTradeShips
                 }
                 else if (StoryTellerUtil.HasRandom())
                 {
-                    if (this.weightBuffer == null)
+                    if (Settings.GameWeightBuffer.NullOrEmpty())
                     {
-                        if (StoryTellerUtil.TryGetRandomWeight(IncidentCategoryDefOf.OrbitalVisitor, out float weight))
+                        if (!StoryTellerUtil.TryGetRandomWeight(IncidentCategoryDefOf.OrbitalVisitor, out Settings.GameWeight))
                         {
-                            this.weight = weight;
-                            this.weightBuffer = weight.ToString();
+                            Settings.GameWeight = 1f;
                         }
+                        Settings.GameWeightBuffer = Settings.GameWeight.ToString();
                     }
 
-                    NumberInput(20, y, "Orbital Visitor Weight", ref this.weight, ref this.weightBuffer, MIN_VALUE, MAX_VALUE);
+                    NumberInput(20, y, "AdjustableTradeShips.OrbitalVisitorWeight".Translate(), ref Settings.GameWeight, ref Settings.GameWeightBuffer, MIN_VALUE, MAX_VALUE);
                     y += 40;
 
                     if (Widgets.ButtonText(new Rect(0, y, 100, 32), "AdjustableTradeShips.Default".Translate()))
                     {
-                        this.weight = 1.0f;
-                        this.weightBuffer = "1.0";
+                        Settings.GameWeight = 1.0f;
+                        Settings.GameWeightBuffer = "1.0";
                     }
 
                     if (Widgets.ButtonText(new Rect(200, y, 100, 32), "AdjustableTradeShips.Apply".Translate()))
                     {
-                        StoryTellerUtil.ApplyRandom(IncidentCategoryDefOf.OrbitalVisitor, this.weight);
-                        Messages.Message("AdjustableTradeShips.GameSettingsApplied".Translate(), MessageTypeDefOf.PositiveEvent);
-                        this.weightBuffer = this.weight.ToString();
+                        if (StoryTellerUtil.ApplyRandom(IncidentCategoryDefOf.OrbitalVisitor, Settings.GameWeight))
+                            Messages.Message("AdjustableTradeShips.GameSettingsApplied".Translate(), MessageTypeDefOf.PositiveEvent);
+                        else
+                            Log.Error("Failed to apply settings to random story teller");
                     }
-
                 }
                 else
                 {
@@ -251,8 +283,8 @@ namespace AdjustableTradeShips
 
         private void NumberInput(float x, float y, string label, ref float val, ref string buffer, float min, float max)
         {
-            Widgets.Label(new Rect(x, y, 175, 20), label);
-            buffer = Widgets.TextField(new Rect(x + 180, y, 115 - x, 20), buffer);
+            Widgets.Label(new Rect(x, y, 200, 20), label);
+            buffer = Widgets.TextField(new Rect(x + 210, y, 100, 20), buffer);
             if (buffer.Length > 0)
             {
                 if (float.TryParse(buffer, out float v))

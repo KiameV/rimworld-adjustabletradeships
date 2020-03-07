@@ -11,6 +11,7 @@
 	<AdjustableTradeShips.Global>Global</AdjustableTradeShips.Global>
 	<AdjustableTradeShips.CurrentGame>Current Game</AdjustableTradeShips.CurrentGame>
 	<AdjustableTradeShips.TradeShips>Orbital Trade Ships</AdjustableTradeShips.TradeShips>
+	<AdjustableTradeShips.OrbitalVisitorWeight>Orbital Visitor Random Weight</AdjustableTradeShips.OrbitalVisitorWeight>
 
 	<AdjustableTradeShips.OTS>orbital trade ships every</AdjustableTradeShips.OTS>
 	<AdjustableTradeShips.Days>days</AdjustableTradeShips.Days>

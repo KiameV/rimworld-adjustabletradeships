@@ -15,6 +15,7 @@ namespace AdjustableTradeShips
             StorytellerCompProperties_OnOffCycle comp;
             if (TryGetOrbitalTraders(out comp))
             {
+                Log.Message($"Orbitabl Trader On/Off Cycle applied.");
                 comp.onDays = days;
                 comp.offDays = 0.001f;
                 comp.numIncidentsRange.min = instances;
@@ -41,27 +42,27 @@ namespace AdjustableTradeShips
             return false;
         }
 
-
-
-
-
         public static bool HasRandom()
         {
             return TryGetRandom(out StorytellerCompProperties_RandomMain comp);
         }
 
-        public static void ApplyRandom(IncidentCategoryDef def, float weight)
+        public static bool ApplyRandom(IncidentCategoryDef def, float weight)
         {
+            bool applied = false;
             if (TryGetRandom(out StorytellerCompProperties_RandomMain comp))
             {
                 foreach (IncidentCategoryEntry e in comp.categoryWeights)
                 {
                     if (e.category == def)
                     {
+                        Log.Message($"{def.defName} weight of {weight} has been applied.");
                         e.weight = weight;
+                        applied = true;
                     }
                 }
             }
+            return applied;
         }
 
         public static bool TryGetRandomWeight(IncidentCategoryDef def, out float weight)
@@ -89,8 +90,7 @@ namespace AdjustableTradeShips
                 StorytellerDef d = Current.Game.storyteller.def;
                 foreach (StorytellerCompProperties c in d.comps)
                 {
-                    StorytellerCompProperties_RandomMain rm = c as StorytellerCompProperties_RandomMain;
-                    if (rm != null)
+                    if (c is StorytellerCompProperties_RandomMain rm)
                     {
                         comp = rm;
                         return true;
@@ -99,11 +99,6 @@ namespace AdjustableTradeShips
             }
             return false;
         }
-
-
-
-
-
 
         public static bool HasInteraction(IncidentDef def)
         {
