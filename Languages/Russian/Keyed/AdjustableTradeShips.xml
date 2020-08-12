@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Mod name in the Settings tab -->
+  <AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
+
+  <!-- Buttons -->
+  <AdjustableTradeShips.Apply>Применить</AdjustableTradeShips.Apply>
+  <AdjustableTradeShips.Default>Стандарт</AdjustableTradeShips.Default>
+
+  <!-- Labels on the Settings page -->
+  <AdjustableTradeShips.Global>Глобальные</AdjustableTradeShips.Global>
+  <AdjustableTradeShips.CurrentGame>Текущая игра</AdjustableTradeShips.CurrentGame>
+  <AdjustableTradeShips.TradeShips>Орбитальные торговые корабли</AdjustableTradeShips.TradeShips>
+  <AdjustableTradeShips.OrbitalVisitorWeight>Вероятность появления в %</AdjustableTradeShips.OrbitalVisitorWeight>
+
+  <AdjustableTradeShips.OTS>сколько одновременно может появиться орбитальных торговцев</AdjustableTradeShips.OTS>
+  <AdjustableTradeShips.Days>дней между появлениями</AdjustableTradeShips.Days>
+
+  <!-- Messages -->
+  <AdjustableTradeShips.GlobalSettingsApplied>Глобальные настройки применены</AdjustableTradeShips.GlobalSettingsApplied>
+  <AdjustableTradeShips.GameSettingsApplied>Игровые настройки применены</AdjustableTradeShips.GameSettingsApplied>
+
+  <!-- Currently Not Used -->
+  <AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
+  <AdjustableTradeShips.MinDaysBetween>Min Days Between</AdjustableTradeShips.MinDaysBetween>
+  <AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>
+  <AdjustableTradeShips.CannotModifyOrbitalTraderTimes>Cannot Modify Orbital Traders Times</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
+  <AdjustableTradeShips.CannotModifyAllyInteractionTimes>Cannot Modify Ally Interaction Times</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
+
+</LanguageData>

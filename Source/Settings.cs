@@ -247,6 +247,10 @@ namespace AdjustableTradeShips
                 }
                 else if (StoryTellerUtil.HasRandom())
                 {
+                    StoryTellerUtil.TryGetRandomWeight(IncidentCategoryDefOf.OrbitalVisitor, out float w);
+                    Widgets.Label(new Rect(20, y, 300, 32), $"Current Weight: {w}");
+                    y += 40;
+
                     if (Settings.GameWeightBuffer.NullOrEmpty())
                     {
                         if (!StoryTellerUtil.TryGetRandomWeight(IncidentCategoryDefOf.OrbitalVisitor, out Settings.GameWeight))

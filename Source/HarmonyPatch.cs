@@ -25,7 +25,8 @@ namespace AdjustableTradeShips
     [HarmonyPatch(typeof(Game), "InitNewGame")]
     static class Patch_Game_InitNewGame
     {
-        static void Prefix()
+        [HarmonyPriority(Priority.Last)]
+        static void Postfix()
         {
 #if DEBUG
             Log.Warning("Patch_Game_InitNewGame Postfix");
@@ -34,9 +35,20 @@ namespace AdjustableTradeShips
         }
     }
 
+    [HarmonyPatch(typeof(SavedGameLoaderNow), "LoadGameFromSaveFileNow")]
+    static class Patch_SavedGameLoader_LoadGameFromSaveFileNow
+    {
+        [HarmonyPriority(Priority.Last)]
+        static void Postfix()
+        {
+            WorldComp.Initialize();
+        }
+    }
+
     [HarmonyPatch(typeof(Storyteller), "Notify_DefChanged")]
     static class Patch_Storyteller_Notify_DefChanged
     {
+        [HarmonyPriority(Priority.Last)]
         static void Postfix()
         {
 #if DEBUG
