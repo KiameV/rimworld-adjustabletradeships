@@ -11,6 +11,7 @@
 	<AdjustableTradeShips.Global>全局</AdjustableTradeShips.Global>
 	<AdjustableTradeShips.CurrentGame>目前的游戏</AdjustableTradeShips.CurrentGame>
 	<AdjustableTradeShips.TradeShips>轨道贸易船</AdjustableTradeShips.TradeShips>
+	<AdjustableTradeShips.OrbitalVisitorWeight>轨道贸易船随机权重</AdjustableTradeShips.OrbitalVisitorWeight>
 
 	<AdjustableTradeShips.OTS>每个轨道贸易船</AdjustableTradeShips.OTS>
 	<AdjustableTradeShips.Days>天数</AdjustableTradeShips.Days>
