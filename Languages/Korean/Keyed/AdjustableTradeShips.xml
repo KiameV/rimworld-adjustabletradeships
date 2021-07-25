@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Mod name in the Settings tab -->
+  <AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
+
+  <!-- Buttons -->
+  <AdjustableTradeShips.Apply>적용</AdjustableTradeShips.Apply>
+  <AdjustableTradeShips.Default>기본값</AdjustableTradeShips.Default>
+
+  <!-- Labels on the Settings page -->
+  <AdjustableTradeShips.Global>전역 설정</AdjustableTradeShips.Global>
+  <AdjustableTradeShips.CurrentGame>현재 게임</AdjustableTradeShips.CurrentGame>
+  <AdjustableTradeShips.TradeShips>궤도 상선</AdjustableTradeShips.TradeShips>
+  <AdjustableTradeShips.OrbitalVisitorWeight>궤도 상선 방문 무작위 가중치</AdjustableTradeShips.OrbitalVisitorWeight>
+
+  <AdjustableTradeShips.OTS>회의 궤도 상선을</AdjustableTradeShips.OTS>
+  <AdjustableTradeShips.Days>일마다</AdjustableTradeShips.Days>
+
+  <!-- Messages -->
+  <AdjustableTradeShips.GlobalSettingsApplied>전역 설정 적용됨</AdjustableTradeShips.GlobalSettingsApplied>
+  <AdjustableTradeShips.GameSettingsApplied>현재 게임 설정 적용됨</AdjustableTradeShips.GameSettingsApplied>
+
+  <!-- Currently Not Used -->
+  <AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
+  <AdjustableTradeShips.MinDaysBetween>Min Days Between</AdjustableTradeShips.MinDaysBetween>
+  <AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>
+  <AdjustableTradeShips.CannotModifyOrbitalTraderTimes>Cannot Modify Orbital Traders Times</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
+  <AdjustableTradeShips.CannotModifyAllyInteractionTimes>Cannot Modify Ally Interaction Times</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
+
+</LanguageData>
