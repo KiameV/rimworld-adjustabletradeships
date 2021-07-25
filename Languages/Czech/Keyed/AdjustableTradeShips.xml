@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<!-- Mod name in the Settings tab -->
+	<AdjustableTradeShips.ModName>Adjustable Trade Ships</AdjustableTradeShips.ModName>
+	
+	<!-- Buttons -->
+  
+  <!-- EN: Apply -->
+	<AdjustableTradeShips.Apply>Použij</AdjustableTradeShips.Apply>
+  <!-- EN: Default -->
+	<AdjustableTradeShips.Default>Výchozí</AdjustableTradeShips.Default>
+	
+	<!-- Labels on the Settings page -->
+  
+  <!-- EN: Global -->
+	<AdjustableTradeShips.Global>Globální</AdjustableTradeShips.Global>
+  <!-- EN: Current Game -->
+	<AdjustableTradeShips.CurrentGame>Aktuální hra</AdjustableTradeShips.CurrentGame>
+  <!-- EN: Orbital Trade Ships -->
+	<AdjustableTradeShips.TradeShips>Orbitální obchodní lodě</AdjustableTradeShips.TradeShips>
+  <!-- EN: Orbital Visitor Random Weight -->
+	<AdjustableTradeShips.OrbitalVisitorWeight>Randyho šance orbitálních lodí</AdjustableTradeShips.OrbitalVisitorWeight>
+
+  <!-- EN: orbital trade ships every -->
+	<AdjustableTradeShips.OTS>orbitálních lodí každých</AdjustableTradeShips.OTS>
+  <!-- EN: days -->
+	<AdjustableTradeShips.Days>dní</AdjustableTradeShips.Days>
+
+	<!-- Messages -->
+  
+  <!-- EN: Global settings applied -->
+	<AdjustableTradeShips.GlobalSettingsApplied>Globální nastavení bylo použito</AdjustableTradeShips.GlobalSettingsApplied>
+  <!-- EN: Game setting applied -->
+	<AdjustableTradeShips.GameSettingsApplied>Nastavení aktuální hry bylo použito</AdjustableTradeShips.GameSettingsApplied>
+
+	<!-- Currently Not Used -->
+  
+  <!-- EN: Ally interactions -->
+	<AdjustableTradeShips.AllyInteractions>Ally Interactions</AdjustableTradeShips.AllyInteractions>
+  <!-- EN: Min Days Between -->
+	<AdjustableTradeShips.MinDaysBetween>Min Days Between</AdjustableTradeShips.MinDaysBetween>
+  <!-- EN: Avarage Days Between -->
+	<AdjustableTradeShips.AverageDaysBetween>Average Days Between</AdjustableTradeShips.AverageDaysBetween>
+  <!-- EN: Cannot Modify Orbital Traders Times -->
+	<AdjustableTradeShips.CannotModifyOrbitalTraderTimes>Cannot Modify Orbital Traders Times</AdjustableTradeShips.CannotModifyOrbitalTraderTimes>
+  <!-- EN: Cannot Modify Ally Interaction Times -->
+	<AdjustableTradeShips.CannotModifyAllyInteractionTimes>Cannot Modify Ally Interaction Times</AdjustableTradeShips.CannotModifyAllyInteractionTimes>
+  
+</LanguageData>
